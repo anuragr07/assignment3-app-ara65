@@ -2,6 +2,9 @@ import React from "react";
 
 function CartAra65(props) {
 
+    // Variable to generatye the total
+    var curTotal = 0;
+
     function deleteItem(e){
         props.deleteAction(e.target.id);
     }
@@ -19,7 +22,12 @@ function CartAra65(props) {
                 </thead>
                 <tbody>
                     {
+                        // Generate the cart rows
                         props.cartData.map((item, key) => {
+
+                            // Generate the total
+                            curTotal = curTotal + (item.quantity * item.price);
+                            
                             return(
                                 <tr key={key}>
                                     <td>{item.name}</td>
@@ -35,7 +43,7 @@ function CartAra65(props) {
             </table>
             <div>
                 <button type="button" className="btn btn-primary" onClick={props.checkoutAction}><h3>Checkout</h3></button>
-                <h3 className="float-right">{`$${props.total.toFixed(2)}`}</h3>
+                <h3 className="float-right">{`$${curTotal.toFixed(2)}`}</h3>
             </div>
         </div>
     )

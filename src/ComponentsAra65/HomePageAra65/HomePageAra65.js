@@ -30,15 +30,14 @@ function HomePageAra65() {
         })
         
         // For cart
-        await getCart()
+        getCart()
         .then(async (data) => {
-            await setCart(data)
+            setCart(data)
         })
+        .then(generateTotal())
         .catch(error => {
             console.log(error);
         })
-
-        generateTotal();
     }
 
     // Adds item to
@@ -73,16 +72,12 @@ function HomePageAra65() {
         refreshPage();
     }
 
-    // To generate cart's total
-    function generateTotal(){
-        var curTotal = 0;
-        cart.forEach(item => {
-            curTotal = curTotal + (item.quantity * item.price);
-        })
-
+    // To set total state
+    function generateTotal(curTotal){
         setTotal(curTotal);
     }
 
+    // Checkout handler
     async function handleCheckout(){
         await checkout();
         await updateInventory(cart);
@@ -98,7 +93,7 @@ function HomePageAra65() {
             <HeaderAra65></HeaderAra65>
             <div className="row container col-md-12 text-left">
                 <InventoryAra65 inventoryData={inventory} addAction={handleAdd}></InventoryAra65>
-                <CartAra65 cartData={cart} deleteAction={handleDelete} total={total} checkoutAction={handleCheckout}></CartAra65>
+                <CartAra65 cartData={cart} deleteAction={handleDelete} setTotalState={generateTotal} checkoutAction={handleCheckout}></CartAra65>
             </div>
         </div>
     )
