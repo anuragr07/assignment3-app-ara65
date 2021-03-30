@@ -30,7 +30,7 @@ function HomePageAra65() {
         })
         
         // For cart
-        getCart()
+        await getCart()
         .then(async (data) => {
             setCart(data)
         })
@@ -50,8 +50,10 @@ function HomePageAra65() {
             quantityLimitFlag = cart.some((item, index) => {
                 count++;
                 if(item.sku === newItem.sku){
-                    count = -1;
-                    return item.quantity < newItem.quantity;
+                    count = -10;
+                    console.log(item.quantity);
+                    console.log(newItem.quantity);
+                    return item.quantity <= newItem.quantity;
                 }
                 else if(count === cart.length){
                     return true;
